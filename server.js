@@ -5,14 +5,15 @@ const bodyParser = require("body-parser")
 const MongoClient = require("mongodb").MongoClient
 const app = express()
 require("dotenv").config()
+const port = 3000
 
-MongoClient.connect(process.env.DB_STRING, (err, client) => {
+MongoClient.connect("mongodb+srv://chrisrenshaw79:UaNPEv2veOWDufPG@stars-wars-db.wpj9yud.mongodb.net/?retryWrites=true&w=majority", (err, client) => {
   if (err) return console.error(err);
   console.log("Connected to Database");
 });
 
-    app.listen(process.env.PORT || PORT, () => {
-      console.log(`Server running on Port 8000...`);
+    app.listen(port, () => {
+      console.log(`Server running on Port ${port}...`);
     });
 
 app.use(bodyParser.urlencoded({ extended: true }));
