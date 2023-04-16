@@ -2,26 +2,34 @@ console.log('May Node be with you')
 
 const express = require('express')
 const bodyParser = require("body-parser")
-const MongoClient = require("mongodb").MongoClient
 const app = express()
+const MongoClient = require("mongodb").MongoClient;
 require("dotenv").config()
 const port = 3000
+const connectionString =
+  "mongodb+srv://chrisrenshaw79:fdgByzMtYtALwH4H@star-wars-cluster.dsexylg.mongodb.net/?retryWrites=true&w=majority";
 
-MongoClient.connect("mongodb+srv://chrisrenshaw79:UaNPEv2veOWDufPG@stars-wars-db.wpj9yud.mongodb.net/?retryWrites=true&w=majority", (err, client) => {
-  if (err) return console.error(err);
-  console.log("Connected to Database");
-});
+  app.set("view engine", "ejs");
 
-    app.listen(port, () => {
-      console.log(`Server running on Port ${port}...`);
-    });
+MongoClient.connect(connectionString, { useUnifiedTopology: true })
+  .then((client) => {
+    console.log("Connected to Database")
+    const db = client.db("star-wars-db")
+    const quotesCollection = db.collection("quotes")
 
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
+        app.use(bodyParser.urlencoded({ extended: true }))
+        app.post("/quotes", (req, res) => {
+        quotesCollection.insertOne(req.body).then((res) => {
+          res.redirect("/")
+        })
+         .catch(error => console.error(error))
 })
 
-app.post("/quotes", (req, res) => {
-    console.log(req.body);
-});
+        app.get("/", (req, res) => {
+          res.sendFile(__dirname + "/index.html");
+        })
+        app.listen(port, () => {
+          console.log(`listening on ${port}`);
+        })
+      })
+          .catch((error) => console.error(error))
