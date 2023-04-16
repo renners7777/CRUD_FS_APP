@@ -1,0 +1,14 @@
+{
+  "name": "crud_fs_app",
+  "version": "1.0.0",
+  "description": "Zell CRUD app practice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
