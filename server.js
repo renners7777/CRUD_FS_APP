@@ -9,7 +9,7 @@ const port = 3000
 const connectionString =
   "mongodb+srv://chrisrenshaw79:fdgByzMtYtALwH4H@star-wars-cluster.dsexylg.mongodb.net/?retryWrites=true&w=majority";
 
-  app.set("view engine", "ejs");
+        app.set("view engine", "ejs");
 
 MongoClient.connect(connectionString, { useUnifiedTopology: true })
   .then((client) => {
