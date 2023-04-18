@@ -36,10 +36,28 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
           })
           .catch(error => console.error(error))
         })
-        
+
+        app.put('/quotes', (req, res) => {
+          quotesCollection.findOneAndUpdate(
+            {name: "Yoda"},
+            {
+              $set: {
+                name: req.body.name,
+                name:  req.body.quote
+              }
+            },
+            {
+              upsert: true
+            },)
+            .then(result => {
+        console.log(result)
+      })
+      .catch(error => console.error(error))
+      })
       
+        
         app.listen(port, () => {
           console.log(`listening on port ${port}`);
-        })
-      })
-          .catch((error) => console.error(error))
+        })   
+  })
+  .catch(console.error)
