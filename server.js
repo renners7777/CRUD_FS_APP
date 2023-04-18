@@ -43,19 +43,18 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
             {
               $set: {
                 name: req.body.name,
-                name:  req.body.quote
+                name: req.body.quote
               }
             },
             {
               upsert: true
-            },)
-            .then(result => {
-        console.log(result)
-      })
-      .catch(error => console.error(error))
-      })
-      
-        
+            }
+          )
+            .then(result => res.json('Success'))
+            .catch(error => console.error(error))
+        })
+
+  
         app.listen(port, () => {
           console.log(`listening on port ${port}`);
         })   
