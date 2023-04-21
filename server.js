@@ -19,7 +19,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
 
         app.use(bodyParser.urlencoded({ extended: true }))
         app.use(bodyParser.json())
-        app.use(express.static(__dirname + '/public'))
+        app.use(express.static('public'))
 
         app.get("/", (req, res) => {
           quotesCollection.find().toArray()
@@ -43,15 +43,14 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
             {
               $set: {
                 name: req.body.name,
-                name: req.body.quote
+                quote: req.body.quote
               },
             },
             {
-              upsert: true,
-              new: true
+              upsert: true
             }
           )
-            .then(res => {
+            .then(result => {
               res.json('Success')
             })
             .catch(error => console.error(error))
@@ -64,7 +63,7 @@ MongoClient.connect(connectionString, { useUnifiedTopology: true })
               if (result.deletedCount === 0) {
                 return res.json('No quote to delete')
               }
-              res.json(`Deleted Darth Vader's quote`)
+              res.json("Deleted Darth Vader's quote")
             })
             .catch(error => console.error(error))
         })
